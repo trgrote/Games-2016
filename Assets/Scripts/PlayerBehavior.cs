@@ -26,14 +26,20 @@ public class PlayerBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
-        device = InputManager.Devices[player == PlayerSelect.PLAYER1 ? 0 : 1]; 
+        if (InputManager.Devices.Count > 1)
+        {
+            device = InputManager.Devices[player == PlayerSelect.PLAYER1 ? 0 : 1]; 
+            Debug.Log(player + " connected to " + device.Name);
+        }
         body = GetComponent<Rigidbody2D>();
-        Debug.Log(player + " connected to " + device.Name);
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+        if (device == null)
+            return;
+        
         if (status == PlayerStatus.Idle)
         {
             direction = device.DPad.Vector;
