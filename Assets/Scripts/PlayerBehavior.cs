@@ -23,15 +23,28 @@ public class PlayerBehavior : MonoBehaviour {
     private Vector2 direction = new Vector2(0, 0);
     private Rigidbody2D body;
 
+    protected InputDevice getPlayerInputDevice()
+    {
+        return InputManager.Devices.Count > (int) player ?
+            InputManager.Devices[ (int) player ] : null;
+    }
+
 	// Use this for initialization
 	void Start () 
     {
-        if (InputManager.Devices.Count > 1)
+        device = getPlayerInputDevice();
+
+        if (device != null)
         {
-            device = InputManager.Devices[player == PlayerSelect.PLAYER1 ? 0 : 1]; 
             Debug.Log(player + " connected to " + device.Name);
         }
+        else
+        {
+            Debug.LogWarning("Failed to find controller for player " + player );
+        }
         body = GetComponent<Rigidbody2D>();
+
+        Physics2D.queriesHitTriggers = false;
 	}
 	
 	// Update is called once per frame
