@@ -30,13 +30,4 @@ public class LevelQuery : MonoBehaviour
 
 		return newPosition;
 	}
-
-	void Update()
-	{
-		if ( Input.GetKeyDown(KeyCode.Space))
-		{
-			EventBroadcaster.broadcastEvent( new FlipBeginEvent() );
-			Flipper.PerformQuadSwitch();
-		}
-	}
 }

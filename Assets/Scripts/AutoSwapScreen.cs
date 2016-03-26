@@ -2,9 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class AutoSwapScreen : MonoBehaviour {
-
-    [SerializeField] private GameObject swapObject = null;
+public class AutoSwapScreen : MonoBehaviour 
+{
     [SerializeField] private int delayInSeconds = 1;
 
     private float currentCounter = 0f;
@@ -12,14 +11,16 @@ public class AutoSwapScreen : MonoBehaviour {
     private Image bar = null;
 
 	// Use this for initialization
-	void Start () {
-        flipper = swapObject.GetComponent<QuadFlipper>();
+	void Start () 
+    {
+        flipper = GameObject.FindObjectOfType<QuadFlipper>();
         bar = this.GetComponent<Image>();
         currentCounter = delayInSeconds;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
         currentCounter -= Time.deltaTime;
         bar.fillAmount = currentCounter / delayInSeconds;
         if (currentCounter <= 0)
