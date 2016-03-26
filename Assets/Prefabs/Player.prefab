@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21268340}
   - 114: {fileID: 11449056}
   - 50: {fileID: 5040328}
+  - 114: {fileID: 11437384}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167740}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.28, y: -0.19, z: 0}
+  m_LocalPosition: {x: -0.31012458, y: 1.0697532, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -47,6 +48,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &11437384
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f01a7a5278b0443fd88f1875bd107e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerOne: {fileID: 21300000, guid: b4ffbddd3cd514ba99f0d80d0fc639b8, type: 3}
+  PlayerTwo: {fileID: 21300000, guid: 8daf3ae95552448de9338b1cf813af8a, type: 3}
 --- !u!114 &11449056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -59,6 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: 0
+  LevelSection: 0
 --- !u!212 &21268340
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -85,7 +100,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 905567369
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9b41374b89b9bc749a6ecfc628baba0b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 281f298f4a6204ccf86caa51f3a2218b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
