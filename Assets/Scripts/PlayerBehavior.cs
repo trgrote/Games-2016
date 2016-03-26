@@ -29,6 +29,37 @@ public class PlayerBehavior : MonoBehaviour {
 			InputManager.Devices[ (int) player ] : null;
 	}
 
+	public Collider2D collidingWithAnything()
+	{
+		// Cast myself in the current position
+		Physics2D.queriesHitTriggers = true;
+		
+		return Physics2D.OverlapPoint( transform.position );
+	}
+
+	public void handleColliding()
+	{
+		// Cast myself in the current position
+		Physics2D.queriesHitTriggers = true;
+		
+		var collider = Physics2D.OverlapPoint( transform.position );
+
+		if ( collider != null )
+		{
+			if ( collider.tag.Equals( "Death" ) )
+			{
+			}
+			else if ( collider.tag.Equals( "Goal" ) )
+			{
+				// Handling Walking into the goal
+			}
+			else if ( string.IsNullOrEmpty( collider.tag ) )
+			{
+				// We probably got a wall?
+			}
+		}
+	}
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -57,6 +88,7 @@ public class PlayerBehavior : MonoBehaviour {
 
 			if ((direction.x != 0.0f && direction.y == 0.0f) || (direction.x == 0.0f && direction.y != 0.0f))
 			{
+				Physics2D.queriesHitTriggers = false;
 				RaycastHit2D ray = Physics2D.Raycast(transform.position, direction, 0.5f);
 				if (ray.collider == null)
 				{
@@ -72,6 +104,11 @@ public class PlayerBehavior : MonoBehaviour {
 			{
 				movement = 0;
 				status = PlayerStatus.Idle;
+				// Check if colliding with anything
+				if ( collidingWithAnything() )
+				{
+					Debug.Log("I ran into a thing");
+				}
 			}
 		}
 	}
