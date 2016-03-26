@@ -16,7 +16,7 @@ public enum PlayerStatus
 
 public class PlayerBehavior : MonoBehaviour {
 
-    [SerializeField] private PlayerSelect player = PlayerSelect.PLAYER2;
+    public PlayerSelect player = PlayerSelect.PLAYER2;
     private PlayerStatus status = PlayerStatus.Idle;
     private int movement = 0;
     private InputDevice device = null;
