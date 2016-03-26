@@ -23,7 +23,8 @@ public class QuadFlipper : MonoBehaviour
 	private IEnumerator Flip()
 	{
 		// Get Current Transforms of the Quads
-		Globals.State = eGameState.Flipping;
+		if ( Globals.State == eGameState.GameMode )
+			Globals.State = eGameState.Flipping;
 		Vector3 quad1_pos = Quad1.transform.position;
 		Vector3 quad2_pos = Quad2.transform.position;
 		float distance = Mathf.Abs( Vector3.Distance( quad1_pos, quad2_pos ) );
@@ -44,7 +45,10 @@ public class QuadFlipper : MonoBehaviour
 		Quad2.transform.position = quad1_pos;
 
 		currentlyFlipping = false;
-		Globals.State = eGameState.GameMode;
+
+		if ( Globals.State == eGameState.Flipping )
+			Globals.State = eGameState.GameMode;
+
 		yield return null;
 	}
 }

@@ -14,10 +14,23 @@ public enum eLevelSection
 
 public class LevelQuery : MonoBehaviour, IEventHandler
 {
+	// Used for determining where to place the players
+	[SerializeField] Transform Player1Camera;
+	[SerializeField] Transform Player2Camera;
+	[SerializeField] QuadFlipper Flipper;
+	[SerializeField] GameObject DeathScreen;
+	[SerializeField] AudioClip victorySound;
+	[SerializeField] AudioClip deathSound;
+
 	void Start()
 	{
 		EventBroadcaster.registerHandler<PlayerDeathEvent>(this);
 		EventBroadcaster.registerHandler<OnGoal>(this);
+	}
+
+	void OnDisable()
+	{
+		EventBroadcaster.unregsterHandler( this );
 	}
 
 	public void handleEvent( IGameEvent evt )
@@ -26,6 +39,8 @@ public class LevelQuery : MonoBehaviour, IEventHandler
 		{
 			// ON Death, switch state
 			Globals.State = eGameState.GameOver;
+			var audio = GameObject.FindObjectOfType<SoundPlayer>();
+			audio.PlaySound(deathSound);
 			// display death screen
 			DeathScreen.SetActive(true);
 		}
@@ -39,14 +54,17 @@ public class LevelQuery : MonoBehaviour, IEventHandler
 				if ( player.onGoal == false )
 					allOnGoal = false;
 			}
+
+			if ( allOnGoal )
+			{
+				// Play Victory Sound
+				var audio = GameObject.FindObjectOfType<SoundPlayer>();
+				audio.PlaySound(victorySound);
+				// Go to Next Level
+				Globals.LoadNextScene();
+			}
 		}
 	}
-
-	// Used for determining where to place the players
-	[SerializeField] Transform Player1Camera;
-	[SerializeField] Transform Player2Camera;
-	[SerializeField] QuadFlipper Flipper;
-	[SerializeField] GameObject DeathScreen;
 
 	public Vector3 GetSwappedLocation( eLevelSection section, Vector3 position )
 	{

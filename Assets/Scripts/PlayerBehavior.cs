@@ -63,7 +63,7 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 				onGoal = true;
 				EventBroadcaster.broadcastEvent( new OnGoal() );
 			}
-			else if ( string.IsNullOrEmpty( collider.tag ) )
+			else
 			{
 				// We probably got a wall?
 				EventBroadcaster.broadcastEvent( new PlayerDeathEvent() );
@@ -88,6 +88,11 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 
 		// Register to Flipping the fuck out
 		EventBroadcaster.registerHandler<FlipBeginEvent>(this);
+	}
+
+	void OnDisable()
+	{
+		EventBroadcaster.unregsterHandler( this );
 	}
 	
 	// Update is called once per frame

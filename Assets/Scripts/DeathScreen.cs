@@ -14,11 +14,13 @@ public class DeathScreen : MonoBehaviour
 			{
 				if ( device.GetControl( InControl.InputControlType.Start ) )
 				{
+					Globals.State = eGameState.GameMode;
 					Globals.ReloadScene();
 					break;
 				}
 				else if ( device.GetControl( InControl.InputControlType.Back ))
 				{
+					Globals.State = eGameState.GameMode;
 					Globals.ReturnToTitle();
 					break;
 				}
