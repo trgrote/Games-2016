@@ -23,7 +23,7 @@ public static class Globals
 	public static void LoadNextScene()
 	{
 		int nextScene = SceneManager.GetActiveScene().buildIndex;
-		nextScene = ( nextScene + 1 ) % SceneManager.sceneCount;
+        nextScene = ( nextScene + 1 ) % SceneManager.sceneCountInBuildSettings;
 		SceneManager.LoadScene(nextScene);
 	}
 

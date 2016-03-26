@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using InControl;
 using System.Collections;
 
@@ -44,6 +45,10 @@ public class ChoiceSelector : MonoBehaviour {
             audio.Stop();
             audio.clip = selectDing;
             audio.Play();
+            if (selectGame.enabled == true)
+            {
+                Globals.LoadNextScene();
+            }
             if (selectExit.enabled == true)
             {
                 Application.Quit();
