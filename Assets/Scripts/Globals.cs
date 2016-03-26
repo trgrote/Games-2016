@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public enum eGameState
 {
@@ -12,4 +13,22 @@ public enum eGameState
 public static class Globals
 {
 	public static eGameState State = eGameState.GameMode;
+
+	public static void ReloadScene()
+	{
+		int currentScene = SceneManager.GetActiveScene().buildIndex;
+		SceneManager.LoadScene(currentScene);
+	}
+
+	public static void LoadNextScene()
+	{
+		int nextScene = SceneManager.GetActiveScene().buildIndex;
+		nextScene = ( nextScene + 1 ) % SceneManager.sceneCount;
+		SceneManager.LoadScene(nextScene);
+	}
+
+	public static void ReturnToTitle()
+	{
+		SceneManager.LoadScene(0);
+	}
 }
