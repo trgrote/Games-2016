@@ -8,9 +8,17 @@ public enum PlayerSelect
     PLAYER2
 }
 
+public enum PlayerStatus
+{
+    Idle,
+    Moving
+}
+
 public class PlayerBehavior : MonoBehaviour {
 
     public PlayerSelect player = PlayerSelect.PLAYER2;
+    private PlayerStatus status = PlayerStatus.Idle;
+    private int movement = 0;
     private InputDevice device = null;
     private Vector2 direction = new Vector2(0, 0);
     private Rigidbody2D body;
@@ -26,14 +34,28 @@ public class PlayerBehavior : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-        if (device.DPad.HasChanged)
+        if (status == PlayerStatus.Idle)
         {
             direction = device.DPad.Vector;
+
+            if (direction.x != 0.0f || direction.y != 0.0f)
+            {
+                RaycastHit2D ray = Physics2D.Raycast(transform.position, direction, 0.5f);
+                if (ray.collider == null)
+                {
+                    status = PlayerStatus.Moving;
+                }
+            }
         }
-        RaycastHit2D ray = Physics2D.Raycast(transform.position, direction, 2.0f);
-        if (ray.collider == null)
+        if (status == PlayerStatus.Moving)
         {
-            body.position = new Vector2(body.position.x + direction.x * 0.5f, body.position.y + direction.y * 0.5f);
+            body.position = new Vector2(body.position.x + direction.x * 0.02f, body.position.y + direction.y * 0.02f);
+            movement += 2;
+            if (movement == 50)
+            {
+                movement = 0;
+                status = PlayerStatus.Idle;
+            }
         }
 	}
 }
