@@ -114,7 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Quad1: {fileID: 1961368414}
   Quad2: {fileID: 711750277}
-  SwitchTime: 1
+  SwitchTime: 0.5
 --- !u!4 &288709085
 Transform:
   m_ObjectHideFlags: 0
