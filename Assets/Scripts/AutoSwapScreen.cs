@@ -21,6 +21,10 @@ public class AutoSwapScreen : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+        // If we aren't in game mode, then don't countdown
+        if ( Globals.State != eGameState.GameMode )
+            return;
+
         currentCounter -= Time.deltaTime;
         bar.fillAmount = currentCounter / delayInSeconds;
         if (currentCounter <= 0)

@@ -14,6 +14,9 @@ public enum PlayerStatus
 	Moving
 }
 
+public class PlayerDeathEvent : IGameEvent {}
+public class OnGoal : IGameEvent {}
+
 public class PlayerBehavior : MonoBehaviour, IEventHandler
 {
 	public PlayerSelect player = PlayerSelect.PLAYER2;
@@ -22,6 +25,8 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 	private InputDevice device = null;
 	private Vector2 direction = new Vector2(0, 0);
 	private Rigidbody2D body;
+
+	[HideInInspector] public bool onGoal = false;
 
 	[HideInInspector] public eLevelSection LevelSection;
 
@@ -50,14 +55,18 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 		{
 			if ( collider.tag.Equals( "Death" ) )
 			{
+				EventBroadcaster.broadcastEvent( new PlayerDeathEvent() );
 			}
 			else if ( collider.tag.Equals( "Goal" ) )
 			{
 				// Handling Walking into the goal
+				onGoal = true;
+				EventBroadcaster.broadcastEvent( new OnGoal() );
 			}
 			else if ( string.IsNullOrEmpty( collider.tag ) )
 			{
 				// We probably got a wall?
+				EventBroadcaster.broadcastEvent( new PlayerDeathEvent() );
 			}
 		}
 	}
@@ -86,6 +95,9 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 	{
 		if (device == null)
 			return;
+
+		if ( Globals.State != eGameState.GameMode )
+            return;
 		
 		if (status == PlayerStatus.Idle)
 		{
@@ -103,6 +115,7 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 		}
 		if (status == PlayerStatus.Moving)
 		{
+			onGoal = false;
 			body.position = new Vector2(body.position.x + direction.x * 0.02f, body.position.y + direction.y * 0.02f);
 			movement += 2;
 			if (movement == 50)
@@ -110,10 +123,7 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 				movement = 0;
 				status = PlayerStatus.Idle;
 				// Check if colliding with anything
-				if ( collidingWithAnything() )
-				{
-					// Debug.Log("I ran into a thing");
-				}
+				handleColliding();
 			}
 		}
 	}
@@ -131,6 +141,12 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 			this.LevelSection = LevelSection == eLevelSection.One ? eLevelSection.Two : eLevelSection.One;
 
 			body.position = newPosition;
+
+			// IF we're currently moving, then don't check collision yet
+			if ( status != PlayerStatus.Moving )
+			{
+				handleColliding();
+			}
 		}
 	}
 }
