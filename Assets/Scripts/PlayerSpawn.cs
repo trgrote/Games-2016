@@ -10,7 +10,7 @@ public class PlayerSpawn : MonoBehaviour
 	void Start () 
 	{
 		// Instantiate Player Object with Current Transform	
-		var player_obj = Instantiate( PlayerPrefab, transform.position, transform.rotation );
+		GameObject player_obj = Instantiate( PlayerPrefab, transform.position, transform.rotation ) as GameObject;
 
 		// Grab Player Behavior and set index
 		var behavior = player_obj.GetComponent<PlayerBehavior>();
