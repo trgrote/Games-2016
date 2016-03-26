@@ -248,6 +248,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectGame: {fileID: 1979331394}
   selectExit: {fileID: 408390361}
+  audio: {fileID: 2091980961}
+  ding: {fileID: 8300000, guid: 59f28e36f13539342b83a9831c8465bf, type: 3}
+  selectDing: {fileID: 8300000, guid: 607bf5033e31a9e47baf04480e33d834, type: 3}
 --- !u!4 &489688588
 Transform:
   m_ObjectHideFlags: 0
