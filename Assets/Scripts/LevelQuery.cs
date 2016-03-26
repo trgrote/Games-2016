@@ -46,12 +46,13 @@ public class LevelQuery : MonoBehaviour, IEventHandler
 		}
 		else if ( evt is OnGoal )
 		{
+			Debug.Log("On Goal Event");
 			// Check if all players are on goals
 			bool allOnGoal = true;
 			foreach ( var obj in GameObject.FindObjectsOfType(typeof(PlayerBehavior)) )
 			{
 				PlayerBehavior player = obj as PlayerBehavior;
-				if ( player.onGoal == false )
+				if ( ! player.onGoal )
 					allOnGoal = false;
 			}
 

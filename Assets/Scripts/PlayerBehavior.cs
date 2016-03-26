@@ -51,6 +51,8 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 		
 		var collider = Physics2D.OverlapPoint( transform.position );
 
+		Debug.Log("Detecting collision");
+
 		if ( collider != null )
 		{
 			if ( collider.tag.Equals( "Death" ) )
@@ -61,6 +63,7 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 			{
 				// Handling Walking into the goal
 				onGoal = true;
+				Debug.Log("On Goal");
 				EventBroadcaster.broadcastEvent( new OnGoal() );
 			}
 			else
@@ -68,6 +71,10 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 				// We probably got a wall?
 				EventBroadcaster.broadcastEvent( new PlayerDeathEvent() );
 			}
+		}
+		else
+		{
+			Debug.Log("Hit Nothing");
 		}
 	}
 
