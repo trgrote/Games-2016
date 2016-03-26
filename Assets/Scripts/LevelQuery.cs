@@ -12,12 +12,41 @@ public enum eLevelSection
 	Two
 }
 
-public class LevelQuery : MonoBehaviour 
+public class LevelQuery : MonoBehaviour, IEventHandler
 {
+	void Start()
+	{
+		EventBroadcaster.registerHandler<PlayerDeathEvent>(this);
+		EventBroadcaster.registerHandler<OnGoal>(this);
+	}
+
+	public void handleEvent( IGameEvent evt )
+	{
+		if ( evt is PlayerDeathEvent )
+		{
+			// ON Death, switch state
+			Globals.State = eGameState.GameOver;
+			// display death screen
+			DeathScreen.SetActive(true);
+		}
+		else if ( evt is OnGoal )
+		{
+			// Check if all players are on goals
+			bool allOnGoal = true;
+			foreach ( var obj in GameObject.FindObjectsOfType(typeof(PlayerBehavior)) )
+			{
+				PlayerBehavior player = obj as PlayerBehavior;
+				if ( player.onGoal == false )
+					allOnGoal = false;
+			}
+		}
+	}
+
 	// Used for determining where to place the players
 	[SerializeField] Transform Player1Camera;
 	[SerializeField] Transform Player2Camera;
 	[SerializeField] QuadFlipper Flipper;
+	[SerializeField] GameObject DeathScreen;
 
 	public Vector3 GetSwappedLocation( eLevelSection section, Vector3 position )
 	{
