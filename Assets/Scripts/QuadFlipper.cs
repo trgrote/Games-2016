@@ -45,4 +45,12 @@ public class QuadFlipper : MonoBehaviour
 		currentlyFlipping = false;
 		yield return null;
 	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			PerformQuadSwitch();
+		}
+	}
 }
