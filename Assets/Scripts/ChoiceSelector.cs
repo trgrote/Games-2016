@@ -44,7 +44,10 @@ public class ChoiceSelector : MonoBehaviour {
             audio.Stop();
             audio.clip = selectDing;
             audio.Play();
-
+            if (selectExit.enabled == true)
+            {
+                Application.Quit();
+            }
         }
 	}
 }
