@@ -10,7 +10,7 @@ public enum PlayerSelect
 
 public class PlayerBehavior : MonoBehaviour {
 
-    [SerializeField] private PlayerSelect player = PlayerSelect.PLAYER2;
+    public PlayerSelect player = PlayerSelect.PLAYER2;
     private InputDevice device = null;
     private Vector2 direction = new Vector2(0, 0);
     private Rigidbody2D body;
