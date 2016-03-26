@@ -14,14 +14,16 @@ public enum PlayerStatus
 	Moving
 }
 
-public class PlayerBehavior : MonoBehaviour {
-
+public class PlayerBehavior : MonoBehaviour, IEventHandler
+{
 	public PlayerSelect player = PlayerSelect.PLAYER2;
 	private PlayerStatus status = PlayerStatus.Idle;
 	private int movement = 0;
 	private InputDevice device = null;
 	private Vector2 direction = new Vector2(0, 0);
 	private Rigidbody2D body;
+
+	[HideInInspector] public eLevelSection LevelSection;
 
 	protected InputDevice getPlayerInputDevice()
 	{
@@ -74,10 +76,13 @@ public class PlayerBehavior : MonoBehaviour {
 			Debug.LogWarning("Failed to find controller for player " + player );
 		}
 		body = GetComponent<Rigidbody2D>();
+
+		// Register to Flipping the fuck out
+		EventBroadcaster.registerHandler<FlipBeginEvent>(this);
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void Update ()
 	{
 		if (device == null)
 			return;
@@ -107,9 +112,25 @@ public class PlayerBehavior : MonoBehaviour {
 				// Check if colliding with anything
 				if ( collidingWithAnything() )
 				{
-					Debug.Log("I ran into a thing");
+					// Debug.Log("I ran into a thing");
 				}
 			}
+		}
+	}
+
+	public void handleEvent( IGameEvent evt )
+	{
+		if ( evt is FlipBeginEvent )
+		{
+			// Find my baby
+			var query = GameObject.Find("LevelQuery");
+			var component = query.GetComponent<LevelQuery>();
+
+			Vector3 newPosition = component.GetSwappedLocation( LevelSection, transform.position );
+
+			this.LevelSection = LevelSection == eLevelSection.One ? eLevelSection.Two : eLevelSection.One;
+
+			body.position = newPosition;
 		}
 	}
 }

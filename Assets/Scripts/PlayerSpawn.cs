@@ -5,6 +5,7 @@ public class PlayerSpawn : MonoBehaviour
 {
 	[SerializeField] private GameObject PlayerPrefab;
 	[SerializeField] private PlayerSelect Player;
+	[SerializeField] private eLevelSection LevelSection;
 	
 	// Use this for initialization
 	void Start () 
@@ -18,6 +19,7 @@ public class PlayerSpawn : MonoBehaviour
 		if ( behavior )
 		{
 			behavior.player = Player;
+			behavior.LevelSection = LevelSection;
 		}
 
 		// Once Player is created, time to die
