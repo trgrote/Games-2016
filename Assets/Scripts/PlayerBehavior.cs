@@ -57,7 +57,7 @@ public class PlayerBehavior : MonoBehaviour {
         {
             direction = device.DPad.Vector;
 
-            if (direction.x != 0.0f || direction.y != 0.0f)
+            if ((direction.x != 0.0f && direction.y == 0.0f) || (direction.x == 0.0f && direction.y != 0.0f))
             {
                 RaycastHit2D ray = Physics2D.Raycast(transform.position, direction, 0.5f);
                 if (ray.collider == null)
