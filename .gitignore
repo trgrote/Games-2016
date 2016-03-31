@@ -28,3 +28,4 @@ sysinfo.txt
 # OS X Specific Files
 .DS_Store
 tags
+tags.meta
