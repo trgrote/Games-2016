@@ -8,6 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/title_screen.unity
   - enabled: 1
+    path: Assets/Scenes/level_tutorial.unity
+  - enabled: 1
     path: Assets/Scenes/level_lightning.unity
   - enabled: 1
     path: Assets/Scenes/VictoryScene.unity
