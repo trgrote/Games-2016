@@ -40,7 +40,7 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 	{
 		// Cast myself in the current position
 		Physics2D.queriesHitTriggers = true;
-		
+
 		return Physics2D.OverlapPoint( transform.position );
 	}
 
@@ -48,10 +48,8 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 	{
 		// Cast myself in the current position
 		Physics2D.queriesHitTriggers = true;
-		
-		var collider = Physics2D.OverlapPoint( transform.position );
 
-		Debug.Log("Detecting collision");
+		var collider = Physics2D.OverlapPoint( body.position );
 
 		if ( collider != null )
 		{
@@ -63,23 +61,18 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 			{
 				// Handling Walking into the goal
 				onGoal = true;
-				Debug.Log("On Goal");
 				EventBroadcaster.broadcastEvent( new OnGoal() );
 			}
-			else
+			else if ( collider.tag.Equals( "Wall" ) )
 			{
 				// We probably got a wall?
 				EventBroadcaster.broadcastEvent( new PlayerDeathEvent() );
 			}
 		}
-		else
-		{
-			Debug.Log("Hit Nothing");
-		}
 	}
 
 	// Use this for initialization
-	void Start () 
+	void Start ()
 	{
 		device = getPlayerInputDevice();
 
@@ -101,7 +94,7 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 	{
 		EventBroadcaster.unregsterHandler( this );
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -109,8 +102,8 @@ public class PlayerBehavior : MonoBehaviour, IEventHandler
 			return;
 
 		if ( Globals.State != eGameState.GameMode )
-            return;
-		
+			return;
+
 		if (status == PlayerStatus.Idle)
 		{
 			direction = device.DPad.Vector;
